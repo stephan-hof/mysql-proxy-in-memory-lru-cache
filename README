@@ -1,0 +1,8 @@
+It converts mysql-proxy into a query cache for all 'SELECT' queries.
+All cached data is stored directly in mysql-proxy using a Least-Recently-Used
+cached strategy. So if the cache goes full the oldest entry gets removed to
+store the new one.
+Furthermore each entry has a lifetime. Is this lifetime reached, the entry in
+the cache is removed and refreshed with data from mysqldb behind the proxy.
+This refresh makes the entry also 'younger', so it is less likely to be removed
+if the cache goes full.
