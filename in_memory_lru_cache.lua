@@ -79,6 +79,10 @@ function lru_cache_get(cache, key)
     if entry == nil then
         return nil
     elseif entry.max_age > os.time() then
+        --for implementing the LRU, we should move the current entry to the head of list
+        --otherwise, it will like FIFO but not LRU
+        lru_cache_remove_entry(cache, entry)
+        lru_cache_add_entry(cache, entry)        
         -- Entry is there + young enough => Cache hit
         return entry.value
     else
